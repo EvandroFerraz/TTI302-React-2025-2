@@ -1,0 +1,16 @@
+
+/* seletor por tipo: <p>
+p{
+    color: red
+}
+*/
+/* seletor por id, prefixo #
+#root{
+    color: blue
+}
+ */
+/*  seletor por classe, prefixo é o ponto*/
+.rotulo{
+    font-size: 18px;
+    color: rgb(226, 83, 43);
+}
