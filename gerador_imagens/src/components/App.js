@@ -3,9 +3,13 @@ import Busca from "./Busca"
 import env from 'react-dotenv'
 import ListaImagens from './ListaImagens'
 import PexelsLogo from "./PexelsLogo"
+import pexelsClient from '../utils/pexelsClient'
 
 // importamos o método para criar um cliente de conexão à api do pexels
 import {createClient} from 'pexels'
+
+// componente funcional
+// const Componente = () => { return JSX }
 
 export default class App extends Component {
     // o estado de App será formado pela lista de fotos que o pexels  
@@ -13,13 +17,25 @@ export default class App extends Component {
         pics: []
     }
 
+    // onBuscaRealizada = (termo) => {
+    //     this.pexelsCliente.photos.search(
+    //         {
+    //             query: termo
+    //         }
+    //         //setState() atualiza o estado atual do componente
+    //     ).then(pics => this.setState({pics: pics.photos}))
+    // }
+
     onBuscaRealizada = (termo) => {
-        this.pexelsCliente.photos.search(
-            {
-                query: termo
-            }
-            //setState() atualiza o estado atual do componente
-        ).then(pics => this.setState({pics: pics.photos}))
+        pexelsClient.get('/search', {
+            params: {query: termo}
+        })
+        // result é um objeto que guarda a resposta da requisicao
+        // data guarda os dados no corpo daquela resposta (JSON)
+        .then(result => {
+            console.log(result)
+            this.setState({pics: result.data.photos})
+        })
     }
 
     pexelsCliente = null
@@ -43,11 +59,13 @@ export default class App extends Component {
                 <div className="col-12">
                     <h1>Exibir uma lista de ... </h1>
                 </div>
-                <div className="col-8">
+                <div className="col-12">
                     <Busca onBuscaRealizada={this.onBuscaRealizada}/>
                 </div>
-                <div className="col-8">
-                   <ListaImagens pics={this.state.pics}/>
+                <div className="col-12">
+                    <div className="grid">
+                        <ListaImagens imgStyle={'col-12 md:col-6 lg:col-4 xl:col-3'} pics={this.state.pics}/>
+                    </div>
                 </div>
             </div>
         )

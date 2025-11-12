@@ -2,10 +2,10 @@ import React from 'react'
 
 // componente funcional
 // pic = photo.src.small
-const Imagem = ({pic}) => {
+const Imagem = ({pic, imgStyle}) => {
     return(
-        <div>
-            <img alt="" src={pic}/>
+        <div className={`${imgStyle} flex justify-content-center`}>
+            <img className="border-radius" alt="" src={pic}/>
         </div>
     )
 }
